@@ -39,5 +39,15 @@ injuries <- injuries %>%
 # Add additional columns
 injuries <- injuries %>%
   mutate(
-    dow = factor(weekdays(trmt_date), levels=c('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'))
+    dow = factor(
+      weekdays(trmt_date),
+      levels=c('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday')),
+    month = factor(
+      month(trmt_date),
+      levels = (1:12),
+      labels=c(
+        'January', 'February', 'March',
+        'April', 'May', 'June',
+        'July', 'August', 'September',
+        'October', 'November', 'December'))
   )
