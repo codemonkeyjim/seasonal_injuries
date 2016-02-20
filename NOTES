@@ -1,6 +1,10 @@
-Based on a visualization by Quartz
+Inspired by Quartz http://qz.com/609255/the-injuries-most-likely-to-land-you-in-an-emergency-room-in-america/
+Flowing Data http://flowingdata.com/2016/02/09/why-people-visit-the-emergency-room/
+
 
 Data main site http://www.cpsc.gov/en/Research--Statistics/NEISS-Injury-Data/
-Data set (2014) http://www.cpsc.gov/Global/Neiss_prod/NEISS-data-2014-updated-12MAY2015.xlsx
+Data set (2014 XLSX) http://www.cpsc.gov/Global/Neiss_prod/NEISS-data-2014-updated-12MAY2015.xlsx
+Data set (2014 TSV via query) http://www.cpsc.gov/cgibin/NEISSQuery/home.aspx
 Data dictionary http://www.cpsc.gov/Media/Documents/Research--Statistics/NEISS-Injury-Data/NEISS-Coding-Manual/
+Factors in SAS format http://www.cpsc.gov/cgibin/neiss/NEISS_SAS_formats.txt
 
