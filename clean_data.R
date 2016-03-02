@@ -29,11 +29,13 @@ injuries <- injuries_2014 %>%
 
 # Apply product codes
 # Eliminate duplicate product codes by only using ones needed for this subset of injuries
-products <- filter(products, code %in% unique(injuries$prod1) || code %in% unique(injuries$prod2))
+product_codes <- products %>%
+  filter(code %in% unique(c(injuries$prod1, injuries$prod2)))
+
 injuries <- injuries %>%
   mutate(
-    prod1 = factor(prod1, levels = products$code, labels = products$title),
-    prod2 = factor(prod2, levels = products$code, labels = products$title)
+    prod1 = factor(prod1, levels = product_codes$code, labels = product_codes$title),
+    prod2 = factor(prod2, levels = product_codes$code, labels = product_codes$title)
   )
 
 # Add additional columns
