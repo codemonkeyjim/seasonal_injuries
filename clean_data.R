@@ -47,11 +47,16 @@ injuries <- injuries %>%
     month = factor(
       month(trmt_date),
       levels = (1:12),
+#       labels=c(
+#         'January', 'February', 'March',
+#         'April', 'May', 'June',
+#         'July', 'August', 'September',
+#         'October', 'November', 'December'))
       labels=c(
-        'January', 'February', 'March',
-        'April', 'May', 'June',
-        'July', 'August', 'September',
-        'October', 'November', 'December'))
-  )
+        'Jan', 'Feb', 'Mar',
+        'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep',
+        'Oct', 'Nov', 'Dec'))
+)
 
 save(injuries, file = 'data/injuries.Rdata')
