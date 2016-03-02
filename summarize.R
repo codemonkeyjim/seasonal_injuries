@@ -1,5 +1,6 @@
 library(dplyr)
 library(lubridate)
+library(ggplot2)
 
 load('data/injuries.Rdata')
 
@@ -24,4 +25,17 @@ monthly <- injuries %>%
 
 top_monthly <- monthly %>%
   group_by(month) %>%
-  top_n(10, portion)
+  top_n(20, portion)
+
+mon = 1
+month_products <- top_monthly[top_monthly$month==mon,]$prod1
+
+graph_data = monthly %>%
+  filter(
+    prod1 %in% (month_products)
+  )
+
+g <- ggplot(graph_data)
+g <- g + geom_line(aes(month, num))
+g <- g + facet_wrap(~prod1, scales = 'free_y')
+g
