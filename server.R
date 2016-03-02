@@ -13,10 +13,21 @@ monthly <- injuries %>%
     portion = num / sum(num)
   )
 
-shinyServer(function(input, output) {
+yearly <- injuries %>%
+  group_by(prod1) %>%
+  summarize(
+    num = round(sum(weight))
+  )
+
+shinyServer(function(input, output, clientData, session) {
+
+  min_inj_products <- reactive({
+    subset(yearly, num >= input$min_injuries)$prod1
+  })
 
   top_monthly <- reactive({
     monthly %>%
+      filter(prod1 %in% min_inj_products()) %>%
       group_by(month) %>%
       top_n(input$n, portion)
   })
@@ -35,8 +46,13 @@ shinyServer(function(input, output) {
   plot_grid <- reactive({
     ggplot(graph_data()) +
       geom_line(aes(month, num, group = 1)) +
-      facet_wrap(~prod1, scales = 'free_y')
+      facet_wrap(~prod1, scales = 'free_y') +
+      labs(x = 'Month', y = 'Injuries')
   })
+
+#   observe({
+#     updateSliderInput(session, 'min_injuries', max = max(yearly$num))
+#   })
 
   # output$top_n <- renderTable(graph_data())
   output$plot_grid <- renderPlot(plot_grid())
