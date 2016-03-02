@@ -16,7 +16,8 @@ shinyUI(fluidPage(
                                     'Oct', 'Nov', 'Dec'))
     ),
     mainPanel(
-      htmlOutput('top_n')
+      htmlOutput('top_n'),
+      plotOutput('plot_grid')
     )
   )
 ))
