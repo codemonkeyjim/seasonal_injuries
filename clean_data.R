@@ -53,3 +53,5 @@ injuries <- injuries %>%
         'July', 'August', 'September',
         'October', 'November', 'December'))
   )
+
+save(injuries, file = 'data/injuries.Rdata')
