@@ -32,5 +32,12 @@ shinyServer(function(input, output) {
       )
   })
 
-    output$top_n <- renderTable(graph_data())
+  plot_grid <- reactive({
+    ggplot(graph_data()) +
+      geom_line(aes(month, num, group = 1)) +
+      facet_wrap(~prod1, scales = 'free_y')
+  })
+
+  # output$top_n <- renderTable(graph_data())
+  output$plot_grid <- renderPlot(plot_grid())
 })
