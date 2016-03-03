@@ -11,16 +11,28 @@ mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
 ---
 
-## Read-And-Delete
+## Project Overview
 
-1. Edit YAML front matter
-2. Write using R Markdown
-3. Use an empty line followed by three dashes to separate slides!
+* Visualize the NEISS product injuries data for 2014
+  * The NEISS collects product-related injury data from select US emergency rooms and extrapolates to the entire US
+* Focus on injuries that are not uniformly distributed throughout the year
 
 --- .class #id 
 
-## Slide 2
+## Potential Uses
 
+* Timely targeted public outreach campaigns
+  * Increase safety awareness
+  * Reduce seasonal injuries
+* Provide additional training to medical and EMS personnel on expected injuries
+
+--- .class #id 
+
+## Example Plot
+
+Here's a compelling example for July, showing the seasonal spikes in swimming and fireworks injuries.
+
+![plot of chunk unnamed-chunk-1](assets/fig/unnamed-chunk-1-1.png)
 
 
 

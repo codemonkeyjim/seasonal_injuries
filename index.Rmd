@@ -11,16 +11,54 @@ mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
 ---
 
-## Read-And-Delete
+## Project Overview
 
-1. Edit YAML front matter
-2. Write using R Markdown
-3. Use an empty line followed by three dashes to separate slides!
+* Visualize the NEISS product injuries data for 2014
+  * The NEISS collects product-related injury data from select US emergency rooms and extrapolates to the entire US
+* Focus on injuries that are not uniformly distributed throughout the year
 
 --- .class #id 
 
-## Slide 2
+## Potential Uses
 
+* Timely targeted public outreach campaigns
+  * Increase safety awareness
+  * Reduce seasonal injuries
+* Provide additional training to medical and EMS personnel on expected injuries
+
+--- .class #id 
+
+## Example Plot
+
+Here's a compelling example for July, showing the seasonal spikes in swimming, fireworks, and yard care injuries.
+
+```{r fig.width=12, fig.height=5, echo=FALSE, warning=FALSE}
+library(dplyr)
+library(ggplot2)
+
+load("./shiny/seasonal_injuries/data/monthly.Rdata")
+load("./shiny/seasonal_injuries/data/yearly.Rdata")
+
+min_inj_products <- subset(yearly, num >= 10000)$prod1
+
+top_monthly <- monthly %>%
+  filter(prod1 %in% min_inj_products) %>%
+  group_by(month) %>%
+  top_n(10, portion)
+
+month_products <- subset(top_monthly, month %in% c('Jul'))$prod1
+
+graph_data <- monthly %>%
+  filter(
+    prod1 %in% (month_products)
+  )
+
+ggplot(graph_data) +
+  geom_line(aes(month, num, group = 1)) +
+  facet_wrap(~prod1, scales = 'free_y') +
+  labs(x = 'Month', y = 'Injuries')
+
+```
 
 
 
