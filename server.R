@@ -13,11 +13,9 @@ library(ggplot2)
 data("injuries")
 data("products")
 
-# Limit to 2014 injuries
-injuries_2014 <- filter(injuries, year(trmt_date) == 2014)
-
-# Clean up data
-injuries <- injuries_2014 %>%
+# Limit to 2014 injuries and clean up data
+injuries <- injuries %>%
+  filter(year(trmt_date) == 2014) %>%
   mutate(
     psu = factor(psu),
     stratum = factor(
@@ -84,6 +82,8 @@ yearly <- injuries %>%
     num = round(sum(weight))
   )
 
+remove(injuries) # To save memory
+
 shinyServer(function(input, output, clientData, session) {
 
   min_inj_products <- reactive({
@@ -114,10 +114,6 @@ shinyServer(function(input, output, clientData, session) {
       facet_wrap(~prod1, scales = 'free_y') +
       labs(x = 'Month', y = 'Injuries')
   })
-
-#   observe({
-#     updateSliderInput(session, 'min_injuries', max = max(yearly$num))
-#   })
 
   # output$top_n <- renderTable(graph_data())
   output$plot_grid <- renderPlot(plot_grid())
