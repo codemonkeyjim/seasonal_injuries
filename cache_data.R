@@ -1,3 +1,5 @@
+# Cache the filtered data to make the Shiny app small enough to run on a free account
+
 if (length(find.package('neiss', quiet = TRUE)) == 0) {
   if (length(find.package('devtools', quiet = TRUE)) == 0) {
     install.packages('devtools')
@@ -8,7 +10,6 @@ if (length(find.package('neiss', quiet = TRUE)) == 0) {
 library(dplyr)
 library(lubridate)
 library(neiss)
-library(ggplot2)
 
 data("injuries")
 data("products")
@@ -83,38 +84,5 @@ yearly <- injuries %>%
   )
 
 remove(injuries) # To save memory
-
-shinyServer(function(input, output, clientData, session) {
-
-  min_inj_products <- reactive({
-    subset(yearly, num >= input$min_injuries)$prod1
-  })
-
-  top_monthly <- reactive({
-    monthly %>%
-      filter(prod1 %in% min_inj_products()) %>%
-      group_by(month) %>%
-      top_n(input$n, portion)
-  })
-
-  month_products <- reactive({
-    subset(top_monthly(), month %in% c(input$month))$prod1
-  })
-
-  graph_data <- reactive({
-    monthly %>%
-      filter(
-        prod1 %in% (month_products())
-      )
-  })
-
-  plot_grid <- reactive({
-    ggplot(graph_data()) +
-      geom_line(aes(month, num, group = 1)) +
-      facet_wrap(~prod1, scales = 'free_y') +
-      labs(x = 'Month', y = 'Injuries')
-  })
-
-  # output$top_n <- renderTable(graph_data())
-  output$plot_grid <- renderPlot(plot_grid())
-})
+save(yearly, file = 'shiny/seasonal_injuries/data/yearly.Rdata')
+save(monthly, file = 'shiny/seasonal_injuries/data/monthly.Rdata')
