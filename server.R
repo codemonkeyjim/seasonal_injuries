@@ -1,6 +1,15 @@
+if (length(find.package('neiss', quiet = TRUE)) == 0) {
+  if (length(find.package('devtools', quiet = TRUE)) == 0) {
+    install.packages('devtools')
+  }
+  devtools::install_github("hadley/neiss")
+}
+
 library(dplyr)
 library(lubridate)
 library(neiss)
+library(ggplot2)
+
 data("injuries")
 data("products")
 
